@@ -154,8 +154,54 @@ const app = Vue.createApp({
     toggleCart() {
       this.showCart = !this.showCart;
       this.orderMessage = "";
-    }
+    },
 
+    // FETCH 2 (POST order) → FETCH 3 (PUT spaces)
+    checkout() {
+      const customerName = this.name.trim();
+      const items = this.cartItems.map(i => ({
+        lessonID: i.lesson.id,
+        spaces:   i.quantity
+      }));
+      const order = {
+        name:      customerName,
+        phone:     this.phone,
+        lessonIDs: items.map(i => i.lessonID),
+        spaces:    this.cart.length,
+        items
+      };
+      const updates = this.cartItems.map(i => ({
+        id:    i.lesson.id,
+        space: i.lesson.space
+      }));
+
+      fetch(API_URL + "/orders", {
+        method:  "POST",
+        headers: { "Content-Type": "application/json" },
+        body:    JSON.stringify(order)
+      })
+        .then(r => { if (!r.ok) throw new Error(); return r.json(); })
+        .then(() =>
+          Promise.all(updates.map(u =>
+            fetch(API_URL + "/lessons/" + u.id, {
+              method:  "PUT",
+              headers: { "Content-Type": "application/json" },
+              body:    JSON.stringify({ space: u.space })
+            })
+          ))
+        )
+        .then(() => this.finishOrder(customerName, true))
+        .catch(()  => this.finishOrder(customerName, false));
+    },
+
+    finishOrder(name, saved) {
+      this.orderMessage = saved
+        ? "Thank you, " + name + "! Your order has been placed successfully."
+        : "Order recorded for " + name + " (demo mode — server not reachable).";
+      this.cart  = [];
+      this.name  = "";
+      this.phone = "";
+    }
   }
 
 });
