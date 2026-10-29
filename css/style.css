@@ -189,9 +189,9 @@ main { padding: var(--gap) 28px; max-width: 1400px; margin: 0 auto; }
 }
 .card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
 
-/* Coloured icon banner at the top of each card */
+/* Solid blue icon banner at the top of each card */
 .card-icon-wrap {
-  background: linear-gradient(135deg, var(--primary), var(--accent));
+  background: var(--primary);
   padding: 22px;
   display: flex;
   align-items: center;
@@ -284,11 +284,10 @@ main { padding: var(--gap) 28px; max-width: 1400px; margin: 0 auto; }
 
 .btn-sm { padding: 6px 13px; font-size: 13px; }
 .btn-lg {
-  padding: 13px 0;
+  
   font-size: 15px;
   width: 100%;
   justify-content: center;
-  margin-top: 6px;
 }
 
 /* ============================================================
@@ -298,7 +297,6 @@ main { padding: var(--gap) 28px; max-width: 1400px; margin: 0 auto; }
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
   color: var(--muted);
   font-size: 15px;
   padding: 48px 0;
@@ -312,7 +310,6 @@ main { padding: var(--gap) 28px; max-width: 1400px; margin: 0 auto; }
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 12px;
   margin-bottom: var(--gap);
 }
 .page-title {
@@ -351,11 +348,12 @@ main { padding: var(--gap) 28px; max-width: 1400px; margin: 0 auto; }
   min-width: 0;
 }
 
+/* Solid blue icon banner */
 .cart-item-icon {
   width: 42px;
   height: 42px;
   flex-shrink: 0;
-  background: linear-gradient(135deg, var(--primary), var(--accent));
+  background: var(--primary);
   border-radius: 8px;
   display: flex;
   align-items: center;
