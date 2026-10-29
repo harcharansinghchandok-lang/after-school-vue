@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>After School Classes</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Vue 3 (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
+
+  <!-- Config & sample data -->
+  <script src="js/config.js"></script>
+  <script src="js/sampleData.js"></script>
+
+  <!-- Components (must load before app.js) -->
+  <script src="js/components/AppHeader.js"></script>
+  <script src="js/components/LessonsPage.js"></script>
+  <script src="js/components/CartPage.js"></script>
+
+  <!-- Main app (defer so the DOM is ready) -->
+  <script src="js/app.js" defer></script>
+</head>
+
+<body>
+<div id="app">
+
+  <!-- ── Header ── -->
+  <app-header
+    :sitename="sitename"
+    :cart-count="cart.length"
+    @toggle-cart="toggleCart">
+  </app-header>
+
+  <!-- ── Demo / offline banner ── -->
+  <p class="status-bar" v-if="statusMessage">
+    <i class="fa-solid fa-triangle-exclamation"></i> {{ statusMessage }}
+  </p>
+
+  <main>
+
+    <!-- ── Page 1: Lessons ── -->
+    <lessons-page
+      v-if="!showCart"
+      :displayed-lessons="displayedLessons"
+      :teachers="teachers"
+      :sort-by="sortBy"
+      :sort-order="sortOrder"
+      :search-text="searchText"
+      :selected-teacher="selectedTeacher"
+      @update-sort-by="sortBy = $event"
+      @update-sort-order="sortOrder = $event"
+      @update-selected-teacher="selectedTeacher = $event"
+      @search="handleSearch"
+      @add-to-cart="addToCart">
+    </lessons-page>
+
+    <!-- ── Page 2: Cart + Checkout ── -->
+    <cart-page
+      v-else
+      :cart-items="cartItems"
+      :total-price="totalPrice"
+      :name="name"
+      :phone="phone"
+      :name-valid="nameValid"
+      :phone-valid="phoneValid"
+      :can-checkout="canCheckout"
+      :order-message="orderMessage"
+      @update-name="name = $event"
+      @update-phone="phone = $event"
+      @remove-from-cart="removeFromCart"
+      @checkout="checkout"
+      @back-to-lessons="showCart = false">
+    </cart-page>
+
+  </main>
+</div>
+</body>
+</html>
