@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>After School Classes</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/sampleData.js"></script>
+  <script src="js/components/AppHeader.js"></script>
+  <script src="js/components/LessonsPage.js"></script>
+  <script src="js/components/CartPage.js"></script>
+  <script src="js/app.js" defer></script>
+</head>
+
+<body>
+<div id="app">
+
+  <app-header
+    :cart-count="cart.length"
+    :show-cart="showCart"
+    @toggle-cart="toggleCart"
+    @navigate="showCart = false">
+  </app-header>
+
+  <p class="status" v-if="statusMessage">{{ statusMessage }}</p>
+
+  <main>
+    <lessons-page
+      v-if="!showCart"
+      :lessons="displayedLessons"
+      :all-lessons="lessons"
+      :teachers="teachers"
+      :sort-by="sortBy"
+      :sort-order="sortOrder"
+      :search-text="searchText"
+      :selected-teacher="selectedTeacher"
+      @add="addToCart"
+      @search="handleSearch"
+      @update-teacher="selectedTeacher = $event"
+      @update-sort-by="sortBy = $event"
+      @update-sort-order="sortOrder = $event">
+    </lessons-page>
+
+    <cart-page
+      v-else
+      :cart-items="cartItems"
+      :total-price="totalPrice"
+      :name="name"
+      :phone="phone"
+      :name-valid="nameValid"
+      :phone-valid="phoneValid"
+      :can-checkout="canCheckout"
+      :order-message="orderMessage"
+      @remove="removeFromCart"
+      @update-name="name = $event"
+      @update-phone="phone = $event"
+      @checkout="checkout"
+      @back="showCart = false">
+    </cart-page>
+  </main>
+
+  <footer class="footer-strip">
+    <i class="fa-solid fa-star"></i> Build Skills &bull; Boost Confidence &bull; Achieve More
+  </footer>
+
+</div>
+</body>
+</html>
