@@ -11,13 +11,13 @@ const app = Vue.createApp({
       sitename:        "After School Classes",
       lessons:         [],
       teachers:        [],
-      cart:            [],      // one lesson id per space booked
+      cart:            [],      
       showCart:        false,
       sortBy:          "topic",
       sortOrder:       "asc",
       searchText:      "",
-      searchIds:       null,    // null = no search filter active
-      selectedTeacher: "",      // "" = all teachers
+      searchIds:       null,    
+      selectedTeacher: "",      
       name:            "",
       phone:           "",
       orderMessage:    "",
@@ -30,7 +30,7 @@ const app = Vue.createApp({
     this.loadTeachers();
   },
 
-  // ── Computed ──────────────────────────────────────────────────────────────
+  // ── Computed 
   computed: {
 
     // Lessons after teacher filter + search + sorting
@@ -86,7 +86,7 @@ const app = Vue.createApp({
     canCheckout()  { return this.nameValid && this.phoneValid && this.cart.length > 0; }
   },
 
-  // ── Methods ───────────────────────────────────────────────────────────────
+  // ── Methods 
   methods: {
 
     // FETCH 1 – GET all lessons
@@ -197,7 +197,7 @@ const app = Vue.createApp({
     finishOrder(name, saved) {
       this.orderMessage = saved
         ? "Thank you, " + name + "! Your order has been placed successfully."
-        : "Order recorded for " + name + " (demo mode — server not reachable).";
+        : "Order recorded for " + name + " (demo mode - server not reachable).";
       this.cart  = [];
       this.name  = "";
       this.phone = "";
