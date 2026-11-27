@@ -131,6 +131,29 @@ const app = Vue.createApp({
               String(l.space).includes(t))
             .map(l => l.id);
         });
+    },
+
+    // Cart operations
+    addToCart(lesson) {
+      if (lesson.space > 0) {
+        lesson.space--;
+        this.cart.push(lesson.id);
+      }
+    },
+
+    removeFromCart(id) {
+      const index = this.cart.indexOf(id);
+      if (index !== -1) {
+        this.cart.splice(index, 1);
+        const lesson = this.lessons.find(l => l.id === id);
+        if (lesson) lesson.space++;
+      }
+      if (this.cart.length === 0) this.showCart = false;
+    },
+
+    toggleCart() {
+      this.showCart = !this.showCart;
+      this.orderMessage = "";
     }
 
   }
