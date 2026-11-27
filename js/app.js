@@ -197,7 +197,7 @@ const app = Vue.createApp({
     finishOrder(name, saved) {
       this.orderMessage = saved
         ? "Thank you, " + name + "! Your order has been placed successfully."
-        : "Order recorded for " + name + " (demo mode - server not reachable).";
+        : "Order recorded for " + name + " (demo mode — server not reachable).";
       this.cart  = [];
       this.name  = "";
       this.phone = "";
